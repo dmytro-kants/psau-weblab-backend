@@ -37,7 +37,7 @@ class UserController {
             }
             await user.save();
             const userDto = new UserDto(user);
-            res.cookie('refreshToken', userDto.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, secure: true, httpOnly: true, sameSite: 'none', domain: "agrarian-backend.onrender.com" })
+            res.cookie('refreshToken', userDto.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000,  httpOnly: true, domain:'localhost', secure:true, sameSite:'none'})
             return res.json({ ...userDto, accessToken: tokens.accessToken });
         } catch (e) {
             next(e)
@@ -47,7 +47,6 @@ class UserController {
     async logout(req, res, next) {
         try {
             const { user } = req.body;
-            console.log(user);
             const userData = await UserModel.findOne({ email: user.email })
             userData.refreshToken = "";
             userData.accessToken = ""
@@ -79,7 +78,7 @@ class UserController {
             }
             await user.save();
             const userDto = new UserDto(user);
-            res.cookie('refreshToken', userDto.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, secure: true, httpOnly: true, sameSite: 'none', domain: "agrarian-backend.onrender.com" })
+            res.cookie('refreshToken', userDto.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true,domain:'localhost', secure:true, sameSite:'none'})
             return res.json({ ...userDto, accessToken: tokens.accessToken });
         } catch (e) {
             next(e)
